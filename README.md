@@ -1,6 +1,12 @@
 # PHPStudy_BackDoor_Exp
 PHPStudy后门事件 EXP
+适用于Python3
 ![](https://github.com/NS-Sp4ce/PHPStudy_BackDoor_Exp/blob/master/img/20190924002758664.png)
+
+# 适用于Python2.x的版本
+
+[Bug-Project-Framework](https://github.com/Fplyth0ner-Combie/Bug-Project-Framework/blob/master/weapon/phpstudy%20%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/phpstudy%20backdoor.py)
+
 # 使用方法
 
 ```
